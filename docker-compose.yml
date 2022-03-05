@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  api:
+    build: .
+    working_dir: /api
+    volumes:
+      - .:/api
+    command: npm run dev
+    ports:
+      - '${API_PORT}:${API_PORT}'
+    depends_on:
+      compile:
+        condition: service_healthy
+    environment:
+      - API_PORT=${API_PORT}
+  compile:
+    image: node:latest
+    working_dir: /source
+    volumes:
+      - .:/source
+    command: npm run build:watch
+    healthcheck:
+      test: bash -c "[ -f dist/index.js ]"
+      interval: 10s
+      timeout: 5s
+      retries: 5
