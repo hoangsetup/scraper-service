@@ -6,6 +6,8 @@ const rabbitMQUsername = process.env.RABBITMQ_USERNAME;
 const rabbitMQPassword = process.env.RABBITMQ_PASSWORD;
 const rabbitMQScraperQueue = process.env.RABBITMQ_QUEUE || 'google_scraper_queue';
 
+const redisUrl = process.env.REDIS_URL || 'redis://redis:6379';
+
 export default {
   apiPort,
   rabbitMQHostname,
@@ -13,4 +15,5 @@ export default {
   rabbitMQUsername,
   rabbitMQPassword,
   rabbitMQScraperQueue,
+  redisUrl,
 };

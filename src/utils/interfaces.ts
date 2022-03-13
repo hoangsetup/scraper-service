@@ -13,3 +13,8 @@ export interface IQueueItem {
   query: string;
   transactionId: number;
 }
+
+export interface ITransaction {
+  status: 'ON_QUEUE' | 'PROCESSING' | 'DONE';
+  data?: ISearchResult;
+}

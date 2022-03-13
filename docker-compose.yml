@@ -13,6 +13,8 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       - API_PORT=${API_PORT}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
@@ -20,6 +22,7 @@ services:
       - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
+      - REDIS_URL=${REDIS_URL}
   consumer:
     build: .
     working_dir: /consumer
@@ -31,6 +34,8 @@ services:
       compile:
         condition: service_healthy
       rabbitmq:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     environment:
       - RABBITMQ_HOST=${RABBITMQ_HOST}
@@ -58,3 +63,7 @@ services:
       test: rabbitmq-diagnostics -q check_running
     ports:
       - '${RABBITMQ_ADMIN_WEB_PORT}:${RABBITMQ_ADMIN_WEB_PORT}'
+  redis:
+    image: redis:latest
+    healthcheck:
+      test: redis-cli ping
