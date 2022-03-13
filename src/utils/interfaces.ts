@@ -8,3 +8,8 @@ export interface ISearchResult {
   took: number;
   links: ILink[];
 }
+
+export interface IQueueItem {
+  query: string;
+  transactionId: number;
+}
